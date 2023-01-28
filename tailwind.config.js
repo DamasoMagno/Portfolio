@@ -11,7 +11,11 @@ module.exports = {
       backgroundColor: {
         background: "#22212C",
         backgroundSection: "#302F3D",
-        backgroundTec: "#CB92B1"
+        backgroundTec: "#CB92B1",
+        backgroundText: "#837E9F"
+      },
+      boxShadow: {
+        section: "2px 2px 2px 1px rgba(0, 0, 0, .2);"
       },
       gridTemplateColumns: {
         r: "300px 1fr"
