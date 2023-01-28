@@ -1,27 +1,12 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import { gql } from "@apollo/client";
 
+import { ProjectsDocument } from "@/graphql/generated/graphql";
 import { client } from "@/libs/apollo";
-import { IProject } from "../interfaces/Project";
+import { IProject } from "@/interfaces/Project";
 
 import { Project } from "@/components/Project";
 import { Sidebar } from "@/components/Sidebar";
-
-const GET_PROJECTS = gql`
-  query Projects {
-    projects {
-      link
-      id
-      name
-      description
-      freelancer
-      languages {
-        name
-      }
-    }
-  }
-`;
 
 interface Home {
   projects: IProject[]
@@ -57,7 +42,7 @@ export default function Home({ projects }: Home) {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await client.query({
-    query: GET_PROJECTS
+    query: ProjectsDocument
   });
 
   return {

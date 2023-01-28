@@ -1,5 +1,11 @@
+import { 
+  Folder, 
+  CurrencyDollarSimple, 
+  Share, 
+  User 
+} from "phosphor-react";
+
 import { IProject } from "@/interfaces/Project";
-import { Folder, CurrencyDollarSimple, Share, User } from "phosphor-react";
 
 interface ProjectProps {
   project: IProject
@@ -37,7 +43,7 @@ export function Project({ project }: ProjectProps) {
               </>
             ) : (
               <>
-                <User size={20}/> Projeto
+                <User size={20}/> Projeto Pessoal
               </>
             )}
           </li>

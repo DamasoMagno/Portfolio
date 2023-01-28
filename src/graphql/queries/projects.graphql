@@ -1,0 +1,12 @@
+query Projects {
+  projects {
+    id
+    link
+    name
+    description
+    freelancer
+    languages {
+      name
+    }
+  }
+}

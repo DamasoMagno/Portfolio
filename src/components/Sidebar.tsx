@@ -1,4 +1,10 @@
-import { EnvelopeSimple, GithubLogo, LinkedinLogo, MapPin, Briefcase } from "phosphor-react";
+import { 
+  EnvelopeSimple, 
+  GithubLogo, 
+  LinkedinLogo, 
+  MapPin, 
+  Briefcase 
+} from "phosphor-react";
 
 export function Sidebar() {
   return (
@@ -56,7 +62,7 @@ export function Sidebar() {
         <ul className="flex flex-col gap-3 mt-5">
           <li className="items-center text-main">
             <strong className="text-sm flex items-center gap-2">
-              <span className="w-1 h-1 rounded-3xl bg-backgroundText"/> PayperCash Comércio e Serviços LTDA
+              <span className="w-1 h-1 rounded-3xl bg-backgroundText" /> PayperCash Comércio e Serviços LTDA
             </strong>
             <span className="text-sm indent-3 inline-block">2021 - 2022</span>
           </li>
