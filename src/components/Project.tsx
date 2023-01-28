@@ -1,5 +1,5 @@
 import { IProject } from "@/interfaces/Project";
-import { Folder, CurrencyDollarSimple, Share } from "phosphor-react";
+import { Folder, CurrencyDollarSimple, Share, User } from "phosphor-react";
 
 interface ProjectProps {
   project: IProject
@@ -31,7 +31,15 @@ export function Project({ project }: ProjectProps) {
       <footer className="flex items-center justify-between">
         <ul className="flex items-center list-none gap-4">
           <li className="flex items-center gap-2 text-main">
-            <CurrencyDollarSimple size={20}/> Free Lancer
+            {project.freelancer ? (
+              <>
+                <CurrencyDollarSimple size={20}/> Free Lancer
+              </>
+            ) : (
+              <>
+                <User size={20}/> Projeto
+              </>
+            )}
           </li>
         </ul>
 
