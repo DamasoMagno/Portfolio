@@ -17,6 +17,7 @@ export function Project({ project }: ProjectProps) {
         <a
           href={project?.link}
           target="_blank"
+          rel="noreferrer"
           className="border-0 flex justify-center items-center"
         >
           <Share size={20} />
