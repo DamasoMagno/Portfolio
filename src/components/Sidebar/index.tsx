@@ -46,6 +46,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
           <a
             href="https://github.com/DamasoMagno"
             target="_blank"
+            rel="noreferrer"
             className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
           >
             <GithubLogo size={24} className="text-primary" />
@@ -54,6 +55,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
           <a
             href="https://www.linkedin.com/in/damasomagno/"
             target="_blank"
+            rel="noreferrer"
             className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
           >
             <LinkedinLogo size={24} className="text-primary" />
@@ -62,6 +64,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
           <a
             href="mailto:damaso.jscript.m@gmail.com"
             target="_blank"
+            rel="noreferrer"
             className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
           >
             <EnvelopeSimple size={24} className="text-primary" />
@@ -69,6 +72,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
           </a>
           <a
             href="https://damasomagno.vecel.app"
+            rel="noreferrer"
             className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
           >
             <Globe size={24} className="text-primary" />
