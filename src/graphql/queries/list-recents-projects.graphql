@@ -1,0 +1,11 @@
+query ListRecentsProjects {
+  projects(first: 6) {
+    id
+    name
+    description
+    freelancer
+    languages {
+      name
+    }
+  }
+}

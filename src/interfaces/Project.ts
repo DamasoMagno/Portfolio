@@ -4,7 +4,7 @@ export interface IProject {
   name: string;
   description: string;
   freelancer: boolean;
-  languages: {
+  languages: Array<{
     name: string;
-  }[]
+  }>
 }

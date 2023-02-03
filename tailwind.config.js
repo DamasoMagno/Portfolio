@@ -10,18 +10,21 @@ module.exports = {
     extend: {
       backgroundColor: {
         background: "#22212C",
-        backgroundSection: "#302F3D",
-        backgroundTec: "#CB92B1",
-        backgroundText: "#837E9F"
+        section: "#302F3D",
+        backgroundSecondary: "#837E9F"
       },
       boxShadow: {
         section: "2px 2px 2px 1px rgba(0, 0, 0, .2);"
       },
+      borderColor: {
+        "ghost-900": "rgb(131, 126, 159)",
+        "ghost-500": "rgba(131, 126, 159, .5)"
+      },
       gridTemplateColumns: {
-        r: "300px 1fr"
+        layout: "350px 1fr"
       },
       textColor: {
-        main: "#837E9F"
+        primary: "#837E9F"
       },
       fontFamily: {
         body: ['Merriweather Sans', 'sans-serif']

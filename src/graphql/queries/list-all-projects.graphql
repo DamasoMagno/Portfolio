@@ -1,7 +1,6 @@
-query Projects {
-  projects {
+query ListAllProjects($where: ProjectWhereInput) {
+  projects(where: $where) {
     id
-    link
     name
     description
     freelancer
@@ -10,3 +9,5 @@ query Projects {
     }
   }
 }
+
+

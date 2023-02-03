@@ -1,53 +1,64 @@
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 
-import { ProjectsDocument } from "@/graphql/generated/graphql";
+import { AuthorDocument, ListRecentsProjectsDocument } from "@/graphql/generated/graphql";
 import { client } from "@/libs/apollo";
+
 import { IProject } from "@/interfaces/Project";
 
 import { Project } from "@/components/Project";
-import { Sidebar } from "@/components/Sidebar";
+import { SidebarContent } from "@/components/Sidebar";
 
 interface Home {
-  projects: IProject[]
+  projects: IProject[];
+  author: any;
 }
 
-export default function Home({ projects }: Home) {
+export default function Home({ projects, author }: Home) {
   return (
-    <div className="grid md:grid-cols-r gap-14 p-10 items-start">
-      <Sidebar />
+    <div className="grid md:grid-cols-layout gap-8 p-4 items-start">
+      <aside className="flex flex-col gap-4">
+        <SidebarContent author={author} />
+      </aside>
 
-      <section>
-        <div className="shadow-section bg-backgroundSection flex items-center justify-between rounded-2xl p-7">
-          <h3 className="text-main bold text-xl">
-            Meus Projetos
+      <main className="flex flex-col mt-4 md:mt-0">
+        <div className="shadow-section bg-section flex items-center justify-between rounded-2xl p-7">
+          <h3 className="text-primary bold text-xl">
+            Projetos Recentes
           </h3>
-          <Link
-            href="/projects"
-            className="text-main text-sm"
-          >
+          <Link href="/projects" className="text-primary text-sm">
             Veja todos
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 my-8">
-          {projects.map((project: any) => {
+        <div className="grid sm:grid-cols xl:grid-cols-2 gap-4 my-4 md:my-7">
+          {projects.map((project: IProject) => {
             return <Project project={project} key={project.id} />
           })}
         </div>
-      </section>
+      </main>
     </div>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await client.query({
-    query: ProjectsDocument
-  });
+  const [projects, author] = await Promise.all([
+    client.query({
+      query: ListRecentsProjectsDocument
+    }),
+
+    client.query({
+      query: AuthorDocument,
+      variables: {
+        name: "Damaso Magno"
+      }
+    }),
+  ])
 
   return {
     props: {
-      projects: data.projects
+      projects: projects.data.projects,
+      author: author.data.author
     }
   }
 }

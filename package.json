@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "graphql-codegen --config codegen.yaml"
+    "codegen": "graphql-codegen --config codegen.yaml",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
-    "@apollo/client": "^3.7.5",
+    "@apollo/client": "^3.6.6",
     "@next/font": "13.1.6",
-    "@radix-ui/react-radio-group": "^1.1.1",
+    "@radix-ui/react-dialog": "^1.0.2",
+    "@radix-ui/react-slot": "^1.0.1",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.6",
     "graphql": "^16.6.0",
