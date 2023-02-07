@@ -1,15 +1,15 @@
 import { Folder, CurrencyDollarSimple, User, Eye } from "phosphor-react";
 
-import { IProject } from "@/interfaces/Project";
+import { IProject } from "@/interfaces/IProject";
 
-import { ShowProjectDetailsModal } from "./ShowProjectDetails";
 import { Button } from "../Button";
 
 interface ProjectProps {
-  project: IProject
+  project: IProject;
+  onSelectProject: (id: string) => void;
 }
 
-export function Project({ project }: ProjectProps) {
+export function Project({ project, onSelectProject }: ProjectProps) {
   return (
     <div className="bg-section p-7 rounded-2xl shadow-section flex flex-col justify-between">
       <header className="text-primary flex items-center gap-4">
@@ -35,12 +35,10 @@ export function Project({ project }: ProjectProps) {
         </span>
 
         <div>
-          <ShowProjectDetailsModal id={project.id}>
-            <Button ghost>
-              <Eye />
-              <span className="hidden sm:block">Visualizar</span>
-            </Button>
-          </ShowProjectDetailsModal>
+          <Button ghost onClick={() => onSelectProject(project.id)}>
+            <Eye />
+            <span className="hidden sm:block">Visualizar</span>
+          </Button>
         </div>
       </footer>
     </div>

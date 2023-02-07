@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { EnvelopeSimple, GithubLogo, LinkedinLogo, MapPin, Globe, Briefcase, DownloadSimple } from "phosphor-react";
 
-import { IAuthor } from "@/interfaces/Author";
+import { IAuthor } from "@/interfaces/IAuthor";
 
 import { Button } from "../Button";
-import { Section } from "./section";
+import { Section } from "./sectionContainer";
 
 interface SidebarContentProps {
   author: IAuthor;
@@ -26,9 +26,15 @@ export function SidebarContent({ author }: SidebarContentProps) {
         <span className="text-primary mt-2 text-sm">{author.area ?? "Front End Developer"}</span>
 
         <footer className="border-ghost-500 border-t-2 flex w-full py-5 px-16 justify-center items-center mt-14 curriculum">
-          <Button ghost>
-            Baixar Currículo 
-            <DownloadSimple size={20} />
+          <Button ghost asChild>
+            <a 
+              href="https://programathor.s3.sa-east-1.amazonaws.com/uploads/user/curriculum/95212/Azul_Linhas_Simples_Curr%C3%ADculo__1_.pdf?X-Amz-Expires=600&X-Amz-Date=20230206T193113Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIIL73EXGLO35ED5Q%2F20230206%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=1c5b8f453d362572c68a73fb50e910ea41db04fe6951d232bd187d1724810e0a"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Baixar Currículo 
+              <DownloadSimple size={20} />
+            </a>
           </Button>
         </footer>
       </div>

@@ -7,25 +7,30 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
 }
 
-export function Button({ ghost, asChild, children, ...props }: ButtonProps) {
-  const Button = asChild ? Slot : 'button';
+export function Button({ 
+  ghost, 
+  asChild, 
+  children, 
+  ...props 
+}: ButtonProps) {
+  const Component = asChild ? Slot : 'button';
 
   return (
-    <Button
+    <Component
       {...props}
       type="button"
       className={`
         pointer 
-        w-full
+        w-full h-11
         flex items-center justify-center gap-2
         ${!ghost ?
           "bg-background text-primary" :
           "border-ghost-500 border-2 text-primary transition delay-75"
         }
-        px-4 py-2
+        px-4 
         rounded-md text-sm
       `}>
       {children}
-    </Button>
+    </Component>
   );
 }

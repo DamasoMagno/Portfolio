@@ -4,15 +4,17 @@ import Link from "next/link";
 import { AuthorDocument, ListRecentsProjectsDocument } from "@/graphql/generated/graphql";
 import { client } from "@/libs/apollo";
 
-import { IProject } from "@/interfaces/Project";
+import { IProject } from "@/interfaces/IProject";
+import { IAuthor } from "@/interfaces/IAuthor";
 
-import { Project } from "@/components/Project";
 import { SidebarContent } from "@/components/Sidebar";
+import { ListProjects } from "@/components/ListProjects";
 
 interface Home {
   projects: IProject[];
-  author: any;
+  author: IAuthor;
 }
+
 
 export default function Home({ projects, author }: Home) {
   return (
@@ -31,11 +33,7 @@ export default function Home({ projects, author }: Home) {
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols xl:grid-cols-2 gap-4 my-4 md:my-7">
-          {projects.map((project: IProject) => {
-            return <Project project={project} key={project.id} />
-          })}
-        </div>
+        <ListProjects projects={projects} />
       </main>
     </div>
   )

@@ -1,0 +1,10 @@
+query Project($id: ID!) {
+  project (where: { id: $id }){
+    name
+    description
+    freelancer
+    languages {
+      name
+    }
+  }
+}

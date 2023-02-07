@@ -1,16 +1,17 @@
-import { GetServerSideProps } from "next";
 import Link from "next/link";
+import { GetServerSideProps } from "next";
 import { useState } from "react";
 import { Circle, MagnifyingGlass, X } from "phosphor-react";
+import { CircleSpinner } from "react-spinners-kit";
 
 import { LanguagesDocument, ListAllProjectsDocument } from "@/graphql/generated/graphql";
 import { client } from "@/libs/apollo";
 
-import { IProject } from "@/interfaces/Project";
-import { ILanguage } from "@/interfaces/Language";
+import { IProject } from "@/interfaces/IProject";
+import { ILanguage } from "@/interfaces/ILanguage";
 
-import { Project } from "@/components/Project";
-import { Section } from "@/components/Sidebar/section";
+import { ListProjects } from "@/components/ListProjects";
+import { Section } from "@/components/Sidebar/sectionContainer";
 import { Button } from "@/components/Button";
 
 interface Projects {
@@ -21,10 +22,12 @@ interface Projects {
 
 export default function Projects({ projects, languages: listLnguages }: Projects) {
   const [allProjects, setAllProjects] = useState<IProject[]>(projects);
-  const [language, setLanguage] = useState<string>("");
 
+  const [language, setLanguage] = useState<string>("");
   const [languages, setLanguages] = useState<string[]>([]);
   const [projectName, setProjectName] = useState<string>("");
+
+  const [loadingProjects, setLoadingProjects] = useState(false);
 
   function setFiltersToSearchProjects(e: any) {
     if (e.code !== "Enter") return;
@@ -50,6 +53,8 @@ export default function Projects({ projects, languages: listLnguages }: Projects
         return;
       };
 
+      setLoadingProjects(true);
+
       const { data } = await client.query({
         query: ListAllProjectsDocument,
         variables: {
@@ -66,6 +71,8 @@ export default function Projects({ projects, languages: listLnguages }: Projects
     } catch (error) {
       console.log(error);
     }
+
+    setLoadingProjects(false);
   }
 
   return (
@@ -80,7 +87,6 @@ export default function Projects({ projects, languages: listLnguages }: Projects
                 onChange={e => setProjectName(e.target.value)}
                 value={projectName}
               />
-
               <button
                 className="border-o flex justify-center items-center text-primary"
                 onClick={() => setProjectName("")}
@@ -122,7 +128,8 @@ export default function Projects({ projects, languages: listLnguages }: Projects
 
             <footer className="w-full">
               <Button onClick={projectsFiltred}>
-                Buscar Projeto <MagnifyingGlass weight="bold" />
+                Buscar Projeto
+                <MagnifyingGlass weight="bold" />
               </Button>
             </footer>
           </div>
@@ -137,14 +144,24 @@ export default function Projects({ projects, languages: listLnguages }: Projects
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols xl:grid-cols-2 gap-4 my-4 md:my-7">
-          {allProjects.map((project) => (
-            <Project
-              key={project.id}
-              project={project}
-            />
-          ))}
-        </div>
+        {!loadingProjects ? (
+          allProjects.length > 0 ? (
+            <ListProjects projects={allProjects}/>
+          ) : (
+            <div className="flex justify-center items-center flex-col mt-20">
+              <strong className="text-primary text-xl w-44 text-center leading-8 opacity-50">
+                Nenhum Projeto Encontrado
+              </strong>
+            </div>
+          )
+        ) : (
+          <div className="flex flex-col justify-center gap-4 items-center mt-20">
+            <CircleSpinner size={30} color="#837E9F"/>
+            <strong className="text-primary text-xl w-44 text-center leading-8 opacity-50">
+              Buscando Projetos
+            </strong>
+          </div>
+        )}
       </main>
     </div>
   )
