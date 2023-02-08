@@ -4,9 +4,6 @@ query ListAllProjects($where: ProjectWhereInput) {
     name
     description
     freelancer
-    languages {
-      name
-    }
   }
 }
 

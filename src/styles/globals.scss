@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  @apply bg-background font-body
+}
+
+.projectModal {
+  @apply fixed top-2/4 right-2/4 bg-section w-11/12 h-5/6 max-w-md overflow-y-scroll -translate-y-2/4 translate-x-2/4 rounded-xl flex flex-col justify-between p-4;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

@@ -4,8 +4,5 @@ query ListRecentsProjects {
     name
     description
     freelancer
-    languages {
-      name
-    }
   }
 }

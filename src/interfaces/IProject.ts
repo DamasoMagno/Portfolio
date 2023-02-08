@@ -1,10 +1,15 @@
 export interface IProject {
-  link: string;
   id: string;
+  image: {
+    url: string;
+  }
   name: string;
   description: string;
   freelancer: boolean;
-  languages: Array<{
+  languages: {
+    id: string;
     name: string;
-  }>
+  }[];
+  repository: string;
+  address: string;
 }

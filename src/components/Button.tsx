@@ -18,7 +18,6 @@ export function Button({
   return (
     <Component
       {...props}
-      type="button"
       className={`
         pointer 
         w-full h-11
@@ -29,6 +28,7 @@ export function Button({
         }
         px-4 
         rounded-md text-sm
+        hover:brightness-90
       `}>
       {children}
     </Component>

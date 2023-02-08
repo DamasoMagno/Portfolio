@@ -1,10 +1,12 @@
 import Image from "next/image";
-import { EnvelopeSimple, GithubLogo, LinkedinLogo, MapPin, Globe, Briefcase, DownloadSimple } from "phosphor-react";
+import { DownloadSimple } from "phosphor-react";
 
 import { IAuthor } from "@/interfaces/IAuthor";
+import { verifyDateIsCurrent } from "@/utils/verify-date-is-valid";
 
 import { Button } from "../Button";
 import { Section } from "./sectionContainer";
+import { Contact } from "./contact";
 
 interface SidebarContentProps {
   author: IAuthor;
@@ -22,17 +24,17 @@ export function SidebarContent({ author }: SidebarContentProps) {
           height={30}
           className="w-32 h-32 rounded-full border-ghost-900 border-4 box-content"
         />
-        <strong className="text-primary mt-3 text-2xl">{author.name ?? "Damaso Magno"}</strong>
-        <span className="text-primary mt-2 text-sm">{author.area ?? "Front End Developer"}</span>
+        <strong className="text-primary mt-3 text-2xl">{author.name}</strong>
+        <span className="text-primary mt-2 text-sm">{author.area}</span>
 
         <footer className="border-ghost-500 border-t-2 flex w-full py-5 px-16 justify-center items-center mt-14 curriculum">
           <Button ghost asChild>
-            <a 
-              href="https://programathor.s3.sa-east-1.amazonaws.com/uploads/user/curriculum/95212/Azul_Linhas_Simples_Curr%C3%ADculo__1_.pdf?X-Amz-Expires=600&X-Amz-Date=20230206T193113Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIIL73EXGLO35ED5Q%2F20230206%2Fsa-east-1%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=1c5b8f453d362572c68a73fb50e910ea41db04fe6951d232bd187d1724810e0a"
+            <a
+              href={author.curriculum.url}
               target="_blank"
               rel="noreferrer"
             >
-              Baixar Currículo 
+              Baixar Currículo
               <DownloadSimple size={20} />
             </a>
           </Button>
@@ -41,49 +43,12 @@ export function SidebarContent({ author }: SidebarContentProps) {
 
       <Section title="Contatos">
         <ul className="flex flex-col gap-4 mx-2">
-          <li className="flex gap-4 items-center text-primary text-sm">
-            <MapPin size={24} className="text-primary" />
-            Brasil
-          </li>
-          <li className="flex gap-4 items-center text-primary text-sm">
-            <Briefcase size={24} className="text-primary" />
-            Free Lancer
-          </li>
-          <a
-            href="https://github.com/DamasoMagno"
-            target="_blank"
-            rel="noreferrer"
-            className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
-          >
-            <GithubLogo size={24} className="text-primary" />
-            DamasoMagno
-          </a>
-          <a
-            href="https://www.linkedin.com/in/damasomagno/"
-            target="_blank"
-            rel="noreferrer"
-            className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
-          >
-            <LinkedinLogo size={24} className="text-primary" />
-            damasomagno
-          </a>
-          <a
-            href="mailto:damaso.jscript.m@gmail.com"
-            target="_blank"
-            rel="noreferrer"
-            className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
-          >
-            <EnvelopeSimple size={24} className="text-primary" />
-            damaso.jscript.m@gmail.com
-          </a>
-          <a
-            href="https://damasomagno.vecel.app"
-            rel="noreferrer"
-            className="flex gap-4 items-center text-primary text-sm underline underline-offset-4"
-          >
-            <Globe size={24} className="text-primary" />
-            damasomagno.vercel.app
-          </a>
+          {author.socialNetworks.map(network => (
+            <Contact
+              network={network}
+              key={network.id}
+            />
+          ))}
         </ul>
       </Section>
 
@@ -91,7 +56,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
         <ul className="grid grid-cols-3 mt-4 mx-2 gap-2">
           {author.languages.map(lang => (
             <li
-              key={lang.name}
+              key={lang.id}
               className="bg-background text-primary bold rounded-3xl flex justify-center py-[6px] items-center text-[0.625rem]"
             >
               {lang.name}
@@ -107,7 +72,9 @@ export function SidebarContent({ author }: SidebarContentProps) {
               <strong className="text-sm flex items-center gap-2">
                 <span className="w-1 h-1 rounded-3xl bg-backgroundSecondary" /> {exp.name}
               </strong>
-              <span className="text-sm indent-3 inline-block">2021 - 2022</span>
+              <span className="text-sm indent-3 inline-block">
+                {verifyDateIsCurrent(exp.startedAt)} - {verifyDateIsCurrent(exp.finishedAt)}
+              </span>
             </li>
           ))}
         </ul>
@@ -120,7 +87,9 @@ export function SidebarContent({ author }: SidebarContentProps) {
               <strong className="text-sm flex items-center gap-2">
                 <span className="w-1 h-1 rounded-3xl bg-backgroundSecondary" />{course.name}
               </strong>
-              <span className="text-sm indent-3 inline-block">2021 - 2022</span>
+              <span className="text-sm indent-3 inline-block">
+                {verifyDateIsCurrent(course.startedAt)} - {verifyDateIsCurrent(course.finishedAt)}
+              </span>
             </li>
           ))}
         </ul>

@@ -10,13 +10,13 @@ import { IAuthor } from "@/interfaces/IAuthor";
 import { SidebarContent } from "@/components/Sidebar";
 import { ListProjects } from "@/components/ListProjects";
 
-interface Home {
+interface HomeProps {
   projects: IProject[];
   author: IAuthor;
 }
 
 
-export default function Home({ projects, author }: Home) {
+export default function Home({ projects, author }: HomeProps) {
   return (
     <div className="grid md:grid-cols-layout gap-8 p-4 items-start">
       <aside className="flex flex-col gap-4">
@@ -28,8 +28,11 @@ export default function Home({ projects, author }: Home) {
           <h3 className="text-primary bold text-xl">
             Projetos Recentes
           </h3>
-          <Link href="/projects" className="text-primary text-sm">
-            Veja todos
+          <Link 
+            href="/projects" 
+            className="text-primary text-sm"
+          >
+            Todos Projetos
           </Link>
         </div>
 
@@ -38,6 +41,7 @@ export default function Home({ projects, author }: Home) {
     </div>
   )
 }
+
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const [projects, author] = await Promise.all([

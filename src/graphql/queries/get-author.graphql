@@ -1,10 +1,21 @@
 query Author($name: String!) {
   author(where: {name: $name}) {
+    id
     photo {
       url
     }
     name
     area
+    curriculum {
+      url
+    }
+    socialNetworks {
+      id
+      url
+      userName
+      networkName
+      isLink
+    }
     languages {
       id
       name
@@ -12,10 +23,14 @@ query Author($name: String!) {
     experiencies {
       id
       name
+      startedAt
+      finishedAt
     }
     courses {
       id
       name
+      startedAt
+      finishedAt
     }
   }
 }

@@ -35,6 +35,7 @@ export type Asset = Node & {
   createdAt: Scalars['DateTime'];
   /** User that created this document */
   createdBy?: Maybe<User>;
+  curriculumAuthor: Array<Author>;
   /** Get the document in other stages */
   documentInStages: Array<Asset>;
   /** The file name */
@@ -85,6 +86,20 @@ export type AssetCreatedAtArgs = {
 export type AssetCreatedByArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']>;
   locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Asset system model */
+export type AssetCurriculumAuthorArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<AuthorOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<AuthorWhereInput>;
 };
 
 
@@ -202,6 +217,7 @@ export type AssetConnection = {
 
 export type AssetCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
+  curriculumAuthor?: InputMaybe<AuthorCreateManyInlineInput>;
   fileName: Scalars['String'];
   handle: Scalars['String'];
   height?: InputMaybe<Scalars['Float']>;
@@ -286,6 +302,9 @@ export type AssetManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  curriculumAuthor_every?: InputMaybe<AuthorWhereInput>;
+  curriculumAuthor_none?: InputMaybe<AuthorWhereInput>;
+  curriculumAuthor_some?: InputMaybe<AuthorWhereInput>;
   documentInStages_every?: InputMaybe<AssetWhereStageInput>;
   documentInStages_none?: InputMaybe<AssetWhereStageInput>;
   documentInStages_some?: InputMaybe<AssetWhereStageInput>;
@@ -383,6 +402,7 @@ export type AssetTransformationInput = {
 };
 
 export type AssetUpdateInput = {
+  curriculumAuthor?: InputMaybe<AuthorUpdateManyInlineInput>;
   fileName?: InputMaybe<Scalars['String']>;
   handle?: InputMaybe<Scalars['String']>;
   height?: InputMaybe<Scalars['Float']>;
@@ -545,6 +565,9 @@ export type AssetWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  curriculumAuthor_every?: InputMaybe<AuthorWhereInput>;
+  curriculumAuthor_none?: InputMaybe<AuthorWhereInput>;
+  curriculumAuthor_some?: InputMaybe<AuthorWhereInput>;
   documentInStages_every?: InputMaybe<AssetWhereStageInput>;
   documentInStages_none?: InputMaybe<AssetWhereStageInput>;
   documentInStages_some?: InputMaybe<AssetWhereStageInput>;
@@ -739,6 +762,7 @@ export type Author = Node & {
   createdAt: Scalars['DateTime'];
   /** User that created this document */
   createdBy?: Maybe<User>;
+  curriculum?: Maybe<Asset>;
   /** Get the document in other stages */
   documentInStages: Array<Author>;
   experiencies: Array<Experiencie>;
@@ -754,6 +778,7 @@ export type Author = Node & {
   /** User that last published this document */
   publishedBy?: Maybe<User>;
   scheduledIn: Array<ScheduledOperation>;
+  socialNetworks: Array<Social>;
   /** System stage field */
   stage: Stage;
   /** The time the document was updated */
@@ -777,6 +802,12 @@ export type AuthorCoursesArgs = {
 
 
 export type AuthorCreatedByArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+export type AuthorCurriculumArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']>;
   locales?: InputMaybe<Array<Locale>>;
 };
@@ -846,6 +877,19 @@ export type AuthorScheduledInArgs = {
 };
 
 
+export type AuthorSocialNetworksArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<SocialOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SocialWhereInput>;
+};
+
+
 export type AuthorUpdatedByArgs = {
   forceParentLocale?: InputMaybe<Scalars['Boolean']>;
   locales?: InputMaybe<Array<Locale>>;
@@ -872,10 +916,12 @@ export type AuthorCreateInput = {
   area?: InputMaybe<Scalars['String']>;
   courses?: InputMaybe<CourseCreateManyInlineInput>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
+  curriculum?: InputMaybe<AssetCreateOneInlineInput>;
   experiencies?: InputMaybe<ExperiencieCreateManyInlineInput>;
   languages?: InputMaybe<LanguageCreateManyInlineInput>;
   name: Scalars['String'];
   photo?: InputMaybe<AssetCreateOneInlineInput>;
+  socialNetworks?: InputMaybe<SocialCreateManyInlineInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -950,6 +996,7 @@ export type AuthorManyWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  curriculum?: InputMaybe<AssetWhereInput>;
   documentInStages_every?: InputMaybe<AuthorWhereStageInput>;
   documentInStages_none?: InputMaybe<AuthorWhereStageInput>;
   documentInStages_some?: InputMaybe<AuthorWhereStageInput>;
@@ -1017,6 +1064,9 @@ export type AuthorManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  socialNetworks_every?: InputMaybe<SocialWhereInput>;
+  socialNetworks_none?: InputMaybe<SocialWhereInput>;
+  socialNetworks_some?: InputMaybe<SocialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1053,10 +1103,12 @@ export enum AuthorOrderByInput {
 export type AuthorUpdateInput = {
   area?: InputMaybe<Scalars['String']>;
   courses?: InputMaybe<CourseUpdateManyInlineInput>;
+  curriculum?: InputMaybe<AssetUpdateOneInlineInput>;
   experiencies?: InputMaybe<ExperiencieUpdateManyInlineInput>;
   languages?: InputMaybe<LanguageUpdateManyInlineInput>;
   name?: InputMaybe<Scalars['String']>;
   photo?: InputMaybe<AssetUpdateOneInlineInput>;
+  socialNetworks?: InputMaybe<SocialUpdateManyInlineInput>;
 };
 
 export type AuthorUpdateManyInlineInput = {
@@ -1177,6 +1229,7 @@ export type AuthorWhereInput = {
   /** All values that are not contained in given list. */
   createdAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   createdBy?: InputMaybe<UserWhereInput>;
+  curriculum?: InputMaybe<AssetWhereInput>;
   documentInStages_every?: InputMaybe<AuthorWhereStageInput>;
   documentInStages_none?: InputMaybe<AuthorWhereStageInput>;
   documentInStages_some?: InputMaybe<AuthorWhereStageInput>;
@@ -1244,6 +1297,9 @@ export type AuthorWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  socialNetworks_every?: InputMaybe<SocialWhereInput>;
+  socialNetworks_none?: InputMaybe<SocialWhereInput>;
+  socialNetworks_some?: InputMaybe<SocialWhereInput>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1315,11 +1371,13 @@ export type ConnectPositionInput = {
 
 export type Course = {
   __typename?: 'Course';
+  finishedAt?: Maybe<Scalars['Date']>;
   /** The unique identifier */
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
+  startedAt?: Maybe<Scalars['Date']>;
 };
 
 export type CourseConnectInput = {
@@ -1340,7 +1398,9 @@ export type CourseConnection = {
 };
 
 export type CourseCreateInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type CourseCreateManyInlineInput = {
@@ -1379,6 +1439,21 @@ export type CourseManyWhereInput = {
   OR?: InputMaybe<Array<CourseWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  finishedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  finishedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  finishedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  finishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  finishedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  finishedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  finishedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  finishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -1417,13 +1492,32 @@ export type CourseManyWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  startedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  startedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  startedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  startedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  startedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  startedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  startedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
 };
 
 export enum CourseOrderByInput {
+  FinishedAtAsc = 'finishedAt_ASC',
+  FinishedAtDesc = 'finishedAt_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC'
+  NameDesc = 'name_DESC',
+  StartedAtAsc = 'startedAt_ASC',
+  StartedAtDesc = 'startedAt_DESC'
 }
 
 export type CourseParent = Author;
@@ -1507,7 +1601,9 @@ export type CourseParentWhereUniqueInput = {
 };
 
 export type CourseUpdateInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type CourseUpdateManyInlineInput = {
@@ -1522,7 +1618,9 @@ export type CourseUpdateManyInlineInput = {
 };
 
 export type CourseUpdateManyInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type CourseUpdateManyWithNestedWhereInput = {
@@ -1592,6 +1690,21 @@ export type CourseWhereInput = {
   OR?: InputMaybe<Array<CourseWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  finishedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  finishedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  finishedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  finishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  finishedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  finishedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  finishedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  finishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -1630,6 +1743,21 @@ export type CourseWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  startedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  startedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  startedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  startedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  startedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  startedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  startedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
 };
 
 /** References Course record uniquely */
@@ -1703,11 +1831,13 @@ export type DocumentVersion = {
 
 export type Experiencie = {
   __typename?: 'Experiencie';
+  finishedAt?: Maybe<Scalars['Date']>;
   /** The unique identifier */
   id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   /** System stage field */
   stage: Stage;
+  startedAt?: Maybe<Scalars['Date']>;
 };
 
 export type ExperiencieConnectInput = {
@@ -1728,7 +1858,9 @@ export type ExperiencieConnection = {
 };
 
 export type ExperiencieCreateInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type ExperiencieCreateManyInlineInput = {
@@ -1767,6 +1899,21 @@ export type ExperiencieManyWhereInput = {
   OR?: InputMaybe<Array<ExperiencieWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  finishedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  finishedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  finishedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  finishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  finishedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  finishedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  finishedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  finishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -1805,13 +1952,32 @@ export type ExperiencieManyWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  startedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  startedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  startedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  startedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  startedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  startedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  startedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
 };
 
 export enum ExperiencieOrderByInput {
+  FinishedAtAsc = 'finishedAt_ASC',
+  FinishedAtDesc = 'finishedAt_DESC',
   IdAsc = 'id_ASC',
   IdDesc = 'id_DESC',
   NameAsc = 'name_ASC',
-  NameDesc = 'name_DESC'
+  NameDesc = 'name_DESC',
+  StartedAtAsc = 'startedAt_ASC',
+  StartedAtDesc = 'startedAt_DESC'
 }
 
 export type ExperiencieParent = Author;
@@ -1895,7 +2061,9 @@ export type ExperiencieParentWhereUniqueInput = {
 };
 
 export type ExperiencieUpdateInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type ExperiencieUpdateManyInlineInput = {
@@ -1910,7 +2078,9 @@ export type ExperiencieUpdateManyInlineInput = {
 };
 
 export type ExperiencieUpdateManyInput = {
+  finishedAt?: InputMaybe<Scalars['Date']>;
   name?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
 };
 
 export type ExperiencieUpdateManyWithNestedWhereInput = {
@@ -1980,6 +2150,21 @@ export type ExperiencieWhereInput = {
   OR?: InputMaybe<Array<ExperiencieWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  finishedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  finishedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  finishedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  finishedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  finishedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  finishedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  finishedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  finishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
   id?: InputMaybe<Scalars['ID']>;
   /** All values containing the given string. */
   id_contains?: InputMaybe<Scalars['ID']>;
@@ -2018,6 +2203,21 @@ export type ExperiencieWhereInput = {
   name_not_starts_with?: InputMaybe<Scalars['String']>;
   /** All values starting with the given string. */
   name_starts_with?: InputMaybe<Scalars['String']>;
+  startedAt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than the given value. */
+  startedAt_gt?: InputMaybe<Scalars['Date']>;
+  /** All values greater than or equal the given value. */
+  startedAt_gte?: InputMaybe<Scalars['Date']>;
+  /** All values that are contained in given list. */
+  startedAt_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
+  /** All values less than the given value. */
+  startedAt_lt?: InputMaybe<Scalars['Date']>;
+  /** All values less than or equal the given value. */
+  startedAt_lte?: InputMaybe<Scalars['Date']>;
+  /** All values that are not equal to given value. */
+  startedAt_not?: InputMaybe<Scalars['Date']>;
+  /** All values that are not contained in given list. */
+  startedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['Date']>>>;
 };
 
 /** References Experiencie record uniquely */
@@ -3242,6 +3442,7 @@ export type PageInfo = {
 
 export type Project = Node & {
   __typename?: 'Project';
+  address?: Maybe<Scalars['String']>;
   /** The time the document was created */
   createdAt: Scalars['DateTime'];
   /** User that created this document */
@@ -3262,6 +3463,7 @@ export type Project = Node & {
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
+  repository?: Maybe<Scalars['String']>;
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -3359,12 +3561,14 @@ export type ProjectConnection = {
 };
 
 export type ProjectCreateInput = {
+  address?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   description?: InputMaybe<Scalars['String']>;
   freelancer?: InputMaybe<Scalars['Boolean']>;
   image: AssetCreateManyInlineInput;
   languages?: InputMaybe<LanguageCreateManyInlineInput>;
   name: Scalars['String'];
+  repository?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -3401,6 +3605,25 @@ export type ProjectManyWhereInput = {
   OR?: InputMaybe<Array<ProjectWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  address?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  address_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  address_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  address_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  address_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  address_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  address_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  address_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  address_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  address_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -3502,6 +3725,25 @@ export type ProjectManyWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
+  repository?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  repository_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  repository_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  repository_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  repository_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  repository_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  repository_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  repository_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  repository_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  repository_starts_with?: InputMaybe<Scalars['String']>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -3524,6 +3766,8 @@ export type ProjectManyWhereInput = {
 };
 
 export enum ProjectOrderByInput {
+  AddressAsc = 'address_ASC',
+  AddressDesc = 'address_DESC',
   CreatedAtAsc = 'createdAt_ASC',
   CreatedAtDesc = 'createdAt_DESC',
   DescriptionAsc = 'description_ASC',
@@ -3536,16 +3780,20 @@ export enum ProjectOrderByInput {
   NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  RepositoryAsc = 'repository_ASC',
+  RepositoryDesc = 'repository_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
 
 export type ProjectUpdateInput = {
+  address?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
   freelancer?: InputMaybe<Scalars['Boolean']>;
   image?: InputMaybe<AssetUpdateManyInlineInput>;
   languages?: InputMaybe<LanguageUpdateManyInlineInput>;
   name?: InputMaybe<Scalars['String']>;
+  repository?: InputMaybe<Scalars['String']>;
 };
 
 export type ProjectUpdateManyInlineInput = {
@@ -3629,6 +3877,25 @@ export type ProjectWhereInput = {
   OR?: InputMaybe<Array<ProjectWhereInput>>;
   /** Contains search across all appropriate fields. */
   _search?: InputMaybe<Scalars['String']>;
+  address?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  address_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  address_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  address_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  address_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  address_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  address_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  address_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  address_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  address_starts_with?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   createdAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -3730,6 +3997,25 @@ export type ProjectWhereInput = {
   /** All values that are not contained in given list. */
   publishedAt_not_in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']>>>;
   publishedBy?: InputMaybe<UserWhereInput>;
+  repository?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  repository_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  repository_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  repository_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  repository_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  repository_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  repository_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  repository_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  repository_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  repository_starts_with?: InputMaybe<Scalars['String']>;
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
@@ -3767,8 +4053,10 @@ export type ProjectWhereStageInput = {
 
 /** References Project record uniquely */
 export type ProjectWhereUniqueInput = {
+  address?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['ID']>;
   name?: InputMaybe<Scalars['String']>;
+  repository?: InputMaybe<Scalars['String']>;
 };
 
 export type PublishLocaleInput = {
@@ -5119,6 +5407,430 @@ export type ScheduledReleaseWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']>;
 };
 
+export type Social = {
+  __typename?: 'Social';
+  /** The unique identifier */
+  id: Scalars['ID'];
+  isLink?: Maybe<Scalars['Boolean']>;
+  networkName?: Maybe<Scalars['String']>;
+  /** System stage field */
+  stage: Stage;
+  url?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+};
+
+export type SocialConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: SocialWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type SocialConnection = {
+  __typename?: 'SocialConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<SocialEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type SocialCreateInput = {
+  isLink?: InputMaybe<Scalars['Boolean']>;
+  networkName?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+};
+
+export type SocialCreateManyInlineInput = {
+  /** Create and connect multiple existing Social documents */
+  create?: InputMaybe<Array<SocialCreateInput>>;
+};
+
+export type SocialCreateOneInlineInput = {
+  /** Create and connect one Social document */
+  create?: InputMaybe<SocialCreateInput>;
+};
+
+export type SocialCreateWithPositionInput = {
+  /** Document to create */
+  data: SocialCreateInput;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+};
+
+/** An edge in a connection. */
+export type SocialEdge = {
+  __typename?: 'SocialEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Social;
+};
+
+/** Identifies documents */
+export type SocialManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<SocialWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<SocialWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<SocialWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  isLink?: InputMaybe<Scalars['Boolean']>;
+  /** All values that are not equal to given value. */
+  isLink_not?: InputMaybe<Scalars['Boolean']>;
+  networkName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  networkName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  networkName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  networkName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  networkName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  networkName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  networkName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  networkName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  networkName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  networkName_starts_with?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  userName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userName_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+export enum SocialOrderByInput {
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  IsLinkAsc = 'isLink_ASC',
+  IsLinkDesc = 'isLink_DESC',
+  NetworkNameAsc = 'networkName_ASC',
+  NetworkNameDesc = 'networkName_DESC',
+  UrlAsc = 'url_ASC',
+  UrlDesc = 'url_DESC',
+  UserNameAsc = 'userName_ASC',
+  UserNameDesc = 'userName_DESC'
+}
+
+export type SocialParent = Author;
+
+export type SocialParentConnectInput = {
+  Author?: InputMaybe<AuthorConnectInput>;
+};
+
+export type SocialParentCreateInput = {
+  Author?: InputMaybe<AuthorCreateInput>;
+};
+
+export type SocialParentCreateManyInlineInput = {
+  /** Connect multiple existing SocialParent documents */
+  connect?: InputMaybe<Array<SocialParentWhereUniqueInput>>;
+  /** Create and connect multiple existing SocialParent documents */
+  create?: InputMaybe<Array<SocialParentCreateInput>>;
+};
+
+export type SocialParentCreateOneInlineInput = {
+  /** Connect one existing SocialParent document */
+  connect?: InputMaybe<SocialParentWhereUniqueInput>;
+  /** Create and connect one SocialParent document */
+  create?: InputMaybe<SocialParentCreateInput>;
+};
+
+export type SocialParentUpdateInput = {
+  Author?: InputMaybe<AuthorUpdateInput>;
+};
+
+export type SocialParentUpdateManyInlineInput = {
+  /** Connect multiple existing SocialParent documents */
+  connect?: InputMaybe<Array<SocialParentConnectInput>>;
+  /** Create and connect multiple SocialParent documents */
+  create?: InputMaybe<Array<SocialParentCreateInput>>;
+  /** Delete multiple SocialParent documents */
+  delete?: InputMaybe<Array<SocialParentWhereUniqueInput>>;
+  /** Disconnect multiple SocialParent documents */
+  disconnect?: InputMaybe<Array<SocialParentWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing SocialParent documents */
+  set?: InputMaybe<Array<SocialParentWhereUniqueInput>>;
+  /** Update multiple SocialParent documents */
+  update?: InputMaybe<Array<SocialParentUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple SocialParent documents */
+  upsert?: InputMaybe<Array<SocialParentUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type SocialParentUpdateManyWithNestedWhereInput = {
+  Author?: InputMaybe<AuthorUpdateManyWithNestedWhereInput>;
+};
+
+export type SocialParentUpdateOneInlineInput = {
+  /** Connect existing SocialParent document */
+  connect?: InputMaybe<SocialParentWhereUniqueInput>;
+  /** Create and connect one SocialParent document */
+  create?: InputMaybe<SocialParentCreateInput>;
+  /** Delete currently connected SocialParent document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected SocialParent document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single SocialParent document */
+  update?: InputMaybe<SocialParentUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single SocialParent document */
+  upsert?: InputMaybe<SocialParentUpsertWithNestedWhereUniqueInput>;
+};
+
+export type SocialParentUpdateWithNestedWhereUniqueInput = {
+  Author?: InputMaybe<AuthorUpdateWithNestedWhereUniqueInput>;
+};
+
+export type SocialParentUpsertWithNestedWhereUniqueInput = {
+  Author?: InputMaybe<AuthorUpsertWithNestedWhereUniqueInput>;
+};
+
+export type SocialParentWhereInput = {
+  Author?: InputMaybe<AuthorWhereInput>;
+};
+
+export type SocialParentWhereUniqueInput = {
+  Author?: InputMaybe<AuthorWhereUniqueInput>;
+};
+
+export type SocialUpdateInput = {
+  isLink?: InputMaybe<Scalars['Boolean']>;
+  networkName?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+};
+
+export type SocialUpdateManyInlineInput = {
+  /** Create and connect multiple Social component instances */
+  create?: InputMaybe<Array<SocialCreateWithPositionInput>>;
+  /** Delete multiple Social documents */
+  delete?: InputMaybe<Array<SocialWhereUniqueInput>>;
+  /** Update multiple Social component instances */
+  update?: InputMaybe<Array<SocialUpdateWithNestedWhereUniqueAndPositionInput>>;
+  /** Upsert multiple Social component instances */
+  upsert?: InputMaybe<Array<SocialUpsertWithNestedWhereUniqueAndPositionInput>>;
+};
+
+export type SocialUpdateManyInput = {
+  isLink?: InputMaybe<Scalars['Boolean']>;
+  networkName?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+};
+
+export type SocialUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: SocialUpdateManyInput;
+  /** Document search */
+  where: SocialWhereInput;
+};
+
+export type SocialUpdateOneInlineInput = {
+  /** Create and connect one Social document */
+  create?: InputMaybe<SocialCreateInput>;
+  /** Delete currently connected Social document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Update single Social document */
+  update?: InputMaybe<SocialUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Social document */
+  upsert?: InputMaybe<SocialUpsertWithNestedWhereUniqueInput>;
+};
+
+export type SocialUpdateWithNestedWhereUniqueAndPositionInput = {
+  /** Document to update */
+  data?: InputMaybe<SocialUpdateInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: SocialWhereUniqueInput;
+};
+
+export type SocialUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: SocialUpdateInput;
+  /** Unique document search */
+  where: SocialWhereUniqueInput;
+};
+
+export type SocialUpsertInput = {
+  /** Create document if it didn't exist */
+  create: SocialCreateInput;
+  /** Update document if it exists */
+  update: SocialUpdateInput;
+};
+
+export type SocialUpsertWithNestedWhereUniqueAndPositionInput = {
+  /** Document to upsert */
+  data?: InputMaybe<SocialUpsertInput>;
+  /** Position in the list of existing component instances, will default to appending at the end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Unique component instance search */
+  where: SocialWhereUniqueInput;
+};
+
+export type SocialUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: SocialUpsertInput;
+  /** Unique document search */
+  where: SocialWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type SocialWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<SocialWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<SocialWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<SocialWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  isLink?: InputMaybe<Scalars['Boolean']>;
+  /** All values that are not equal to given value. */
+  isLink_not?: InputMaybe<Scalars['Boolean']>;
+  networkName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  networkName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  networkName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  networkName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  networkName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  networkName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  networkName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  networkName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  networkName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  networkName_starts_with?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars['String']>;
+  userName?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  userName_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  userName_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  userName_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values that are not equal to given value. */
+  userName_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  userName_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  userName_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  userName_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** All values not starting with the given string. */
+  userName_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  userName_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+/** References Social record uniquely */
+export type SocialWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
 /** Stage system enumeration */
 export enum Stage {
   /** The Draft is the default stage for all your content. */
@@ -5629,21 +6341,21 @@ export type AuthorQueryVariables = Exact<{
 }>;
 
 
-export type AuthorQuery = { __typename?: 'Query', author?: { __typename?: 'Author', name: string, area?: string | null, photo?: { __typename?: 'Asset', url: string } | null, languages: Array<{ __typename?: 'Language', id: string, name?: string | null }>, experiencies: Array<{ __typename?: 'Experiencie', id: string, name?: string | null }>, courses: Array<{ __typename?: 'Course', id: string, name?: string | null }> } | null };
+export type AuthorQuery = { __typename?: 'Query', author?: { __typename?: 'Author', id: string, name: string, area?: string | null, photo?: { __typename?: 'Asset', url: string } | null, curriculum?: { __typename?: 'Asset', url: string } | null, socialNetworks: Array<{ __typename?: 'Social', id: string, url?: string | null, userName?: string | null, networkName?: string | null, isLink?: boolean | null }>, languages: Array<{ __typename?: 'Language', id: string, name?: string | null }>, experiencies: Array<{ __typename?: 'Experiencie', id: string, name?: string | null, startedAt?: any | null, finishedAt?: any | null }>, courses: Array<{ __typename?: 'Course', id: string, name?: string | null, startedAt?: any | null, finishedAt?: any | null }> } | null };
 
 export type ProjectQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type ProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', name: string, description?: string | null, freelancer?: boolean | null, languages: Array<{ __typename?: 'Language', name?: string | null }> } | null };
+export type ProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', name: string, description?: string | null, freelancer?: boolean | null, repository?: string | null, address?: string | null, image: Array<{ __typename?: 'Asset', id: string, url: string }>, languages: Array<{ __typename?: 'Language', id: string, name?: string | null }> } | null };
 
 export type ListAllProjectsQueryVariables = Exact<{
   where?: InputMaybe<ProjectWhereInput>;
 }>;
 
 
-export type ListAllProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, freelancer?: boolean | null, languages: Array<{ __typename?: 'Language', name?: string | null }> }> };
+export type ListAllProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, freelancer?: boolean | null }> };
 
 export type LanguagesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5653,17 +6365,28 @@ export type LanguagesQuery = { __typename?: 'Query', languages: Array<{ __typena
 export type ListRecentsProjectsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListRecentsProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, freelancer?: boolean | null, languages: Array<{ __typename?: 'Language', name?: string | null }> }> };
+export type ListRecentsProjectsQuery = { __typename?: 'Query', projects: Array<{ __typename?: 'Project', id: string, name: string, description?: string | null, freelancer?: boolean | null }> };
 
 
 export const AuthorDocument = gql`
     query Author($name: String!) {
   author(where: {name: $name}) {
+    id
     photo {
       url
     }
     name
     area
+    curriculum {
+      url
+    }
+    socialNetworks {
+      id
+      url
+      userName
+      networkName
+      isLink
+    }
     languages {
       id
       name
@@ -5671,10 +6394,14 @@ export const AuthorDocument = gql`
     experiencies {
       id
       name
+      startedAt
+      finishedAt
     }
     courses {
       id
       name
+      startedAt
+      finishedAt
     }
   }
 }
@@ -5710,12 +6437,19 @@ export type AuthorQueryResult = Apollo.QueryResult<AuthorQuery, AuthorQueryVaria
 export const ProjectDocument = gql`
     query Project($id: ID!) {
   project(where: {id: $id}) {
+    image {
+      id
+      url
+    }
     name
     description
     freelancer
     languages {
+      id
       name
     }
+    repository
+    address
   }
 }
     `;
@@ -5754,9 +6488,6 @@ export const ListAllProjectsDocument = gql`
     name
     description
     freelancer
-    languages {
-      name
-    }
   }
 }
     `;
@@ -5830,9 +6561,6 @@ export const ListRecentsProjectsDocument = gql`
     name
     description
     freelancer
-    languages {
-      name
-    }
   }
 }
     `;

@@ -1,3 +1,5 @@
+import { INetwork } from "./INetwork";
+
 export interface IAuthor {
   id: string;
   photo: {
@@ -5,15 +7,25 @@ export interface IAuthor {
   }
   name: string;
   area: string;
-  languages: Array<{
-    name: string;
-  }>
-  courses: Array<{
+  curriculum: {
+    url: string;
+  };
+  socialNetworks: INetwork[];
+  languages: {
     id: string;
     name: string;
-  }>
-  experiencies: Array<{
+  }[];
+  courses: {
     id: string;
     name: string;
-  }>
+    startedAt: string;
+    finishedAt: string;
+  }[];
+  experiencies: {
+    id: string;
+    name: string;
+    startedAt: string;
+    finishedAt: string;
+  }[];
 }
+

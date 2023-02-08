@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IProject } from "@/interfaces/IProject";
 
 import { Project } from "./Project";
-import { ProjectDetailsModal } from "./Project/ProjectDetailsModal";
+import { ProjectDetailsModal } from "./ShowProjectModal";
 
 interface ProjectProps {
   projects: IProject[];

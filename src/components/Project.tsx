@@ -2,7 +2,7 @@ import { Folder, CurrencyDollarSimple, User, Eye } from "phosphor-react";
 
 import { IProject } from "@/interfaces/IProject";
 
-import { Button } from "../Button";
+import { Button } from "./Button";
 
 interface ProjectProps {
   project: IProject;

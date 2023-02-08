@@ -30,7 +30,7 @@ export default function Projects({ projects, languages: listLnguages }: Projects
   const [loadingProjects, setLoadingProjects] = useState(false);
 
   function setFiltersToSearchProjects(e: any) {
-    if (e.code !== "Enter") return;
+    if (e.keyCode !== 13) return;
 
     let languageAlreadyExists = languages.find(lang => lang === language);
     if (languageAlreadyExists) return;
@@ -48,10 +48,7 @@ export default function Projects({ projects, languages: listLnguages }: Projects
 
   async function projectsFiltred() {
     try {
-      if (!projectName && languages.length === 0) {
-        setAllProjects(projects);
-        return;
-      };
+      if (!projectName && languages.length === 0) return;
 
       setLoadingProjects(true);
 
@@ -75,6 +72,14 @@ export default function Projects({ projects, languages: listLnguages }: Projects
     setLoadingProjects(false);
   }
 
+  async function clearFilters() {
+    setLanguages([]);
+    setProjectName("");
+
+    setAllProjects([...projects]);
+  }
+
+
   return (
     <div className="grid md:grid-cols-layout gap-8 p-4 items-start">
       <aside className="flex flex-col gap-4">
@@ -95,7 +100,7 @@ export default function Projects({ projects, languages: listLnguages }: Projects
               </button>
             </div>
 
-            <div className="mt-8 mb-6">
+            <div className="mt-8 mb-8">
               <input
                 className="bg-transparent outline text-sm border-0 outline-0 text-white w-full"
                 placeholder="Selecionar Linguagem"
@@ -126,7 +131,11 @@ export default function Projects({ projects, languages: listLnguages }: Projects
               </ul>
             </div>
 
-            <footer className="w-full">
+            <footer className="w-full flex flex-col gap-2">
+              <Button ghost onClick={clearFilters}>
+                Limpar Busca <X />
+              </Button>
+
               <Button onClick={projectsFiltred}>
                 Buscar Projeto
                 <MagnifyingGlass weight="bold" />
@@ -139,14 +148,17 @@ export default function Projects({ projects, languages: listLnguages }: Projects
       <main className="mt-2 md:mt-0">
         <div className="shadow-section bg-section flex items-center justify-between rounded-2xl p-7">
           <h3 className="text-primary bold text-xl">Todos os Projetos</h3>
-          <Link href="/" className="text-primary text-sm">
+          <Link
+            href="/"
+            className="text-primary text-sm"
+          >
             Voltar ao Inicio
           </Link>
         </div>
 
         {!loadingProjects ? (
           allProjects.length > 0 ? (
-            <ListProjects projects={allProjects}/>
+            <ListProjects projects={allProjects} />
           ) : (
             <div className="flex justify-center items-center flex-col mt-20">
               <strong className="text-primary text-xl w-44 text-center leading-8 opacity-50">
@@ -156,7 +168,7 @@ export default function Projects({ projects, languages: listLnguages }: Projects
           )
         ) : (
           <div className="flex flex-col justify-center gap-4 items-center mt-20">
-            <CircleSpinner size={30} color="#837E9F"/>
+            <CircleSpinner size={30} color="#837E9F" />
             <strong className="text-primary text-xl w-44 text-center leading-8 opacity-50">
               Buscando Projetos
             </strong>

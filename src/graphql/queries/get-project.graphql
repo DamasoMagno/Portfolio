@@ -1,10 +1,17 @@
 query Project($id: ID!) {
   project (where: { id: $id }){
+    image {
+      id
+      url
+    }
     name
     description
     freelancer
     languages {
+      id
       name
     }
+    repository 
+    address 
   }
 }
