@@ -28,8 +28,8 @@ export default function Home({ projects, author }: HomeProps) {
           <h3 className="text-primary bold text-xl">
             Projetos Recentes
           </h3>
-          <Link 
-            href="/projects" 
+          <Link
+            href="/projects"
             className="text-primary text-sm"
           >
             Todos Projetos
@@ -55,7 +55,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         name: "Damaso Magno"
       }
     }),
-  ])
+  ]);
 
   return {
     props: {

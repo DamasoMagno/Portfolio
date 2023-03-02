@@ -1,12 +1,12 @@
-import { INetwork } from "@/interfaces/INetwork";
-import { 
-  EnvelopeSimple, 
-  GithubLogo, 
-  Globe, 
-  IconProps, 
-  LinkedinLogo, 
+import {
+  EnvelopeSimple,
+  GithubLogo,
+  Globe,
+  LinkedinLogo,
   MapPin
 } from "phosphor-react";
+
+import { INetwork } from "@/interfaces/INetwork";
 
 const contactIcons = [
   {
@@ -38,16 +38,29 @@ interface ContactProps {
 export function Contact({ network }: ContactProps) {
   const contactIcon = contactIcons.find(({ name }) => name === network.networkName)
 
+  if (!network.isLink) {
+    return (
+      <li
+        key={network.id}
+        className="flex gap-4 items-center text-primary text-sm"
+      >
+        {contactIcon?.icon}
+        <span>{network.userName}</span>
+      </li>
+    );
+  }
+
   return (
     <a
-      href={network.isLink ? network.url : ""}
+      href={network.url}
       key={network.id}
       target="_blank"
       rel="noreferrer"
       className={`
         flex gap-4 items-center 
         text-primary text-sm 
-        ${network.isLink && "underline underline-offset-4"}
+        underline underline-offset-4
+        cursor-pointer
       `}
     >
       {contactIcon?.icon}
@@ -55,3 +68,5 @@ export function Contact({ network }: ContactProps) {
     </a>
   );
 }
+
+

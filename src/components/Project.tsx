@@ -10,6 +10,13 @@ interface ProjectProps {
 }
 
 export function Project({ project, onSelectProject }: ProjectProps) {
+  let resumeDescription = project.description.slice(0, 100);
+
+  let formatDescriptionResume =
+    project.description.length > resumeDescription.length ?
+      resumeDescription + "..." :
+      resumeDescription
+
   return (
     <div className="bg-section p-7 rounded-2xl shadow-section flex flex-col justify-between">
       <header className="text-primary flex items-center gap-4">
@@ -18,7 +25,7 @@ export function Project({ project, onSelectProject }: ProjectProps) {
       </header>
 
       <p className="text-primary mt-5 mb-6">
-        {project.description}
+        {formatDescriptionResume}
       </p>
 
       <footer className="flex items-center justify-between">

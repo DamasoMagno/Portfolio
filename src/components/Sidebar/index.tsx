@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { DownloadSimple } from "phosphor-react";
+import { DownloadSimple, User } from "phosphor-react";
+import * as Avatar from "@radix-ui/react-avatar";
 
 import { IAuthor } from "@/interfaces/IAuthor";
 import { verifyDateIsCurrent } from "@/utils/verify-date-is-valid";
@@ -16,14 +16,17 @@ export function SidebarContent({ author }: SidebarContentProps) {
   return (
     <>
       <div className="bg-section rounded-2xl flex flex-col items-center pt-8 shadow-section">
-        <Image
-          src={author.photo.url}
-          alt="Github Damaso Magno"
-          sizes="100%"
-          width={30}
-          height={30}
-          className="w-32 h-32 rounded-full border-ghost-900 border-4 box-content"
-        />
+        <Avatar.Root className="w-32 h-32 rounded-full border-ghost-900 border-4 box-content overflow-hidden">
+          <Avatar.Image 
+            src={author.photo.url} 
+            alt="Github Damaso Magno" 
+            className="h-full"
+          />
+          <Avatar.Fallback>
+            <User size="100%"/>
+          </Avatar.Fallback>
+        </Avatar.Root>
+
         <strong className="text-primary mt-3 text-2xl">{author.name}</strong>
         <span className="text-primary mt-2 text-sm">{author.area}</span>
 
@@ -80,7 +83,7 @@ export function SidebarContent({ author }: SidebarContentProps) {
         </ul>
       </Section>
 
-      <Section title="Educação">
+      <Section title="Formações Acadêmicas">
         <ul className="flex flex-col gap-4 mt-4 mx-2">
           {author.courses.map(course => (
             <li className="items-center text-primary" key={course.id}>
